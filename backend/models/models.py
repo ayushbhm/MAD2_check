@@ -14,12 +14,12 @@ roles_users = db.Table('roles_users',
 )
 
 
-# Define Role Model
+
 class Role(db.Model, RoleMixin):
     id = db.Column(db.Integer(), primary_key=True)
     name = db.Column(db.String(80), unique=True)
 
-# Define User Model
+
 class User(db.Model, UserMixin):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)

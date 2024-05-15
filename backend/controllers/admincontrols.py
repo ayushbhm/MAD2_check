@@ -1,10 +1,64 @@
 from flask import Blueprint, jsonify,request
 import base64
 from models.models import BookDetails, BookCategory,BookRequests,BookRating,db
-
+from werkzeug.utils import secure_filename
 from flask_jwt_extended import JWTManager, create_access_token, get_jwt_identity, jwt_required
 
 admincontrols_bp = Blueprint('admincontrols', __name__, )
+
+
+@admincontrols_bp.route('/api/admin_get_book_details')
+def admin_get_book_details():
+    books = BookDetails.query.all()
+    
+    return jsonify([book.to_dict() for book in books])
+
+
+@admincontrols_bp.route('/api/admin_get_categories')
+def admin_get_book_categories():
+    categories = BookCategory.query.all()
+    return jsonify([categories.to_dict() for categories in categories])
+
+@admincontrols_bp.route('/api/admin_update_book/<int:book_id>', methods=['POST'])
+def update_book(book_id):
+    
+    book = BookDetails.query.get_or_404(book_id)
+
+    
+    data = request.json
+    if 'title' in data:
+        book.title = data['title']
+    if 'author' in data:
+        book.author = data['author']
+    if 'category' in data:
+        book.category = data['category']
+        
+    print(request.files.get('pdf'),"sf")
+    if 'pdf' in request.files:
+        pdf_file = request.files['pdf']
+       
+        if pdf_file:
+            filename = secure_filename(pdf_file.filename)
+            pdf_data = pdf_file.read()
+            book.pdf = pdf_data
+
+    try:
+        
+        db.session.commit()
+        return jsonify(message='Book updated successfully'), 200
+    except Exception as e:
+        db.session.rollback()
+        return jsonify(message=f'Failed to update book: {str(e)}'), 500
+
+
+
+@admincontrols_bp.route('/admin_delete_book/<int:book_id>', methods=['DELETE'])
+def admin_delete_book(book_id):
+    book = BookDetails.query.get_or_404(book_id)
+    db.session.delete(book)
+    db.session.commit()
+    return jsonify(message='Book deleted successfully'), 200
+
 
 
 

@@ -46,9 +46,11 @@ def login():
     data = request.get_json()
     username = data.get('username')
     password = data.get('password')
-
+    print(username)
+    print(password)
+    print( User.query.all())
     users = User.query.filter_by(username=username).first()
-
+    
     if users and users.password == password and any(role.name == 'student' for role in users.roles):
         token = create_access_token(identity=username)
         return jsonify({'token': token})
@@ -61,9 +63,11 @@ def AdminLogin():
     data = request.get_json()
     username = data.get('username')
     password = data.get('password')
-
+    print(username)
+    print(password)
+    
     users = User.query.filter_by(username=username).first()
-
+    print(users)
     if users and users.password == password and any(role.name == 'admin' for role in users.roles):
         token = create_access_token(identity=username)
         return jsonify({'token': token})

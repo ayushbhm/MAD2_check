@@ -24,7 +24,11 @@
             <li>
             <router-link class="nav-link active text-light" aria-current="page" to="/ManageCategory">Category Manage</router-link>
             </li>
-  
+            
+
+            <li>
+              <router-link class="nav-link active text-light" aria-current="page" to="/AdminManageBooks">Books Manage</router-link>
+              </li>
             
   
   

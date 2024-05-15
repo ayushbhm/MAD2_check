@@ -44,8 +44,7 @@
           console.log('Token:', token);
           // Redirect the user or perform other actions based on successful login
         } catch (error) {
-          console.error('Login failed:', error.response.data.message);
-          // Handle login failure, display error message to the user, etc.
+          alert("Wrong password or Username.")
         }
       }
     }

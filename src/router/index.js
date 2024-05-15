@@ -7,16 +7,23 @@ import ReadReviews from '@/views/ReadReviews.vue'
 import RegisterUser from '@/views/RegisterUser.vue'
 import AdminLogin from '@/views/Admin/AdminLogin.vue'
 import ManageCategory from  '@/views/Admin/ManageCategory.vue'
+import AdminManageBooks from '../views/Admin/ManageBooks.vue'
 
 import AdminMainpage from '../views/Admin/Mainpage.vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
+      path: '/AdminManageBooks',
+      name: 'AdminManageBooks',
+      component:AdminManageBooks
+    },
+    {
       path: '/',
       name: 'MainPage',
       component: MainPage
     },
+
 
     {
       path: '/ManageCategory',
@@ -101,7 +108,6 @@ const router = createRouter({
       name: 'ReadReviews',
       component: ReadReviews
     },
-
 
 
   ]
